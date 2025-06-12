@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Role enum for strict type safety
+enum Role {
+  investor
+  partner
+  admin
+  listener
+}
+
+model User {
+  id        String   @id @default(uuid())
+  uid       String   @unique
+  email     String   @unique
+  role      Role     @default(investor)
+  wallet    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Asset {
+  id           String   @id @default(uuid())
+  partnerID    String
+  title        String
+  valuation    Float
+  tokenSupply  Int
+  approved     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
