@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Asset" ADD CONSTRAINT "Asset_partnerID_fkey" FOREIGN KEY ("partnerID") REFERENCES "User"("uid") ON DELETE RESTRICT ON UPDATE CASCADE;
