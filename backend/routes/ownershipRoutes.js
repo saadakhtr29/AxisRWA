@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const ownershipController = require("../controllers/ownershipController");
-const { verifyJWT } = require("../middleware/authMiddleware");
+const { authMiddleware } = require("../middleware/authMiddleware");
 const { body } = require("express-validator");
 
-// POST /api/ownership/purchase
+// Purchase Ownership Token
 router.post(
   "/purchase",
-  verifyJWT,
+  authMiddleware,
   [
     body("assetId").isUUID().withMessage("Invalid asset ID"),
     body("quantity")
@@ -21,7 +21,11 @@ router.post(
   ownershipController.purchaseOwnership
 );
 
-// GET /api/ownership/my-investments
-router.get("/my-investments", verifyJWT, ownershipController.getMyInvestments);
+// View Investments
+router.get(
+  "/my-investments",
+  authMiddleware,
+  ownershipController.getMyInvestments
+);
 
 module.exports = router;
