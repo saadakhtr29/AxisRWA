@@ -44,7 +44,7 @@ const distributeMonthlyROI = cron.schedule("0 0 1 * *", async () => {
     console.error("Monthly ROI distribution failed:", err);
   }
 }, {
-  scheduled: false // Don't auto-start (we will start it from server)
+  scheduled: false // Don't auto-start (will start it from server)
 });
 
 module.exports = distributeMonthlyROI;

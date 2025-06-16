@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
-// Generate dummy wallet (replace with actual wallet logic if needed)
+// Generate dummy wallet (replace with actual wallet logic)
 const generateDummyWallet = () => {
   return (
     "0x" +

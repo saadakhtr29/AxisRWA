@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 
-// 🔒 Admin-only role assignment
+// Admin-only role assignment
 router.post(
   "/assign-role",
   authMiddleware,
@@ -23,7 +23,7 @@ router.post(
   assignRole
 );
 
-// 🔐 Auth debug endpoint
+// Auth debug endpoint
 router.get("/me", authMiddleware, getCurrentUser);
 
 module.exports = router;
