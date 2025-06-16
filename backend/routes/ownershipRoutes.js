@@ -21,11 +21,24 @@ router.post(
   ownershipController.purchaseOwnership
 );
 
-// View Investments
+// View current user's investments
 router.get(
   "/my-investments",
   authMiddleware,
   ownershipController.getMyInvestments
 );
+
+// View all investors for an asset
+router.get(
+  "/asset/:assetId",
+  authMiddleware,
+  ownershipController.getInvestorsByAsset
+);
+
+// View a specific ownership record by ID
+router.get("/:id", authMiddleware, ownershipController.getOwnershipById);
+
+// Revoke an ownership (admin only)
+router.delete("/:id", authMiddleware, ownershipController.revokeOwnership);
 
 module.exports = router;

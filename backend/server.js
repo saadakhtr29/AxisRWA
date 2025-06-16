@@ -21,7 +21,7 @@ app.use(morgan("dev"));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/assets", assetRoutes);
-app.use("/api/investments", ownershipRoutes);
+app.use("/api/ownership", ownershipRoutes);
 app.use("/api/roi", roiRoutes);
 
 // Health check
