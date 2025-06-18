@@ -16,8 +16,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const email = "investor@test.com";
-const password = "investorPass123";
+const email = "admin@gmail.com";
+const password = "adminpass123";
 
 signInWithEmailAndPassword(auth, email, password)
   .then(async (userCred) => {

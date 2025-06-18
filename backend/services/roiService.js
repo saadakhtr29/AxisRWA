@@ -15,7 +15,6 @@ const distributeRoi = async () => {
     2,
     "0"
   )}`;
-
   const results = [];
 
   for (const asset of assets) {
@@ -58,17 +57,48 @@ const getUserRoiTokens = async (userId) => {
   });
 };
 
+// FIXED: Use double-quoted identifiers for case-sensitive PostgreSQL column names
 const getUserRoiHistory = async (userId) => {
   return prisma.$queryRaw`
     SELECT 
-      asset_id as "assetId",
-      DATE_TRUNC('month', distributed_at) as "month",
-      SUM(amount)::FLOAT as "totalAmount"
+      "assetId" as "assetId",
+      DATE_TRUNC('month', "distributedAt") as "month",
+      SUM("amount")::FLOAT as "totalAmount"
     FROM "RoiToken"
-    WHERE user_id = ${userId}
-    GROUP BY asset_id, month
+    WHERE "userId" = ${userId}
+    GROUP BY "assetId", month
     ORDER BY month DESC;
   `;
+};
+
+// OR — If prefer Prisma Query Builder instead of raw SQL
+const getUserRoiHistoryWithPrisma = async (userId) => {
+  const all = await prisma.roiToken.findMany({
+    where: { userId },
+    select: {
+      assetId: true,
+      distributedAt: true,
+      amount: true,
+    },
+  });
+
+  // Manual monthly aggregation in JS
+  const map = new Map();
+  for (const roi of all) {
+    const month = roi.distributedAt.toISOString().slice(0, 7); // e.g. "2025-06"
+    const key = `${roi.assetId}-${month}`;
+    const current = map.get(key) || {
+      assetId: roi.assetId,
+      month,
+      totalAmount: 0,
+    };
+    current.totalAmount += roi.amount;
+    map.set(key, current);
+  }
+
+  return Array.from(map.values()).sort((a, b) =>
+    b.month.localeCompare(a.month)
+  );
 };
 
 const getRoiByAsset = async (assetId) => {
@@ -83,4 +113,5 @@ module.exports = {
   getUserRoiTokens,
   getUserRoiHistory,
   getRoiByAsset,
+  getUserRoiHistoryWithPrisma, // optional alternate method
 };
