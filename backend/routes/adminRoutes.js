@@ -53,4 +53,12 @@ router.get(
   adminController.viewROIDistributions
 );
 
+// KYC verification
+router.put(
+    "/kyc/:kycId/review",
+    verifyToken,
+    requireRole(["admin"]),
+    adminController.reviewKYC
+  );
+
 module.exports = router;

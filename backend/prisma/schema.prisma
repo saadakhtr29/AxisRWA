@@ -24,9 +24,11 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Relations
-  assets     Asset[]          @relation("PartnerAssets")
-  ownerships OwnershipToken[]
-  roiTokens  RoiToken[] // ✅ Added
+  assets        Asset[]          @relation("PartnerAssets")
+  ownerships    OwnershipToken[]
+  roiTokens     RoiToken[]
+  notifications Notification[] // ✅ Added reverse relation
+  kycFiles      KYCFile[] // ✅ Added reverse relation
 }
 
 model Asset {
@@ -75,4 +77,26 @@ model RevenueReport {
   revenueAmount Float
   period        String
   createdAt     DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model KYCFile {
+  id          String    @id @default(uuid())
+  userId      String
+  fileUrl     String
+  status      String    @default("pending") // pending | approved | rejected
+  submittedAt DateTime  @default(now())
+  reviewedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id])
 }

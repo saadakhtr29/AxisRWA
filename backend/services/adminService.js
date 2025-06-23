@@ -1,4 +1,5 @@
 const prisma = require("../prisma/client");
+const { sendEmail } = require("../utils/emailService");
 
 exports.getPendingAssets = async () => {
   return await prisma.asset.findMany({
@@ -52,4 +53,33 @@ exports.getROIDistributions = async () => {
     },
     orderBy: { distributedAt: "desc" },
   });
+};
+
+exports.reviewKYCFile = async (kycId, action) => {
+  const kyc = await prisma.kYCFile.update({
+    where: { id: kycId },
+    data: {
+      status: action,
+      reviewedAt: new Date(),
+    },
+    include: { user: true },
+  });
+
+  // Create notification
+  await prisma.notification.create({
+    data: {
+      userId: kyc.userId,
+      title: `KYC ${action}`,
+      body: `Your KYC submission has been ${action}.`,
+    },
+  });
+
+  // Send email
+  await sendEmail({
+    to: kyc.user.email,
+    subject: `KYC ${action}`,
+    text: `Dear user, your KYC has been ${action}.`,
+  });
+
+  return { message: `KYC ${action}` };
 };

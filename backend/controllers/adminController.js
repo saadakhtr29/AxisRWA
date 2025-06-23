@@ -39,3 +39,10 @@ exports.viewROIDistributions = async (req, res) => {
   const distributions = await adminService.getROIDistributions();
   res.status(200).json(distributions);
 };
+
+exports.reviewKYC = async (req, res) => {
+  const { kycId } = req.params;
+  const { action } = req.body; // "approved" | "rejected"
+  const result = await adminService.reviewKYCFile(kycId, action);
+  res.json(result);
+};
