@@ -1,0 +1,30 @@
+.navbar {
+    background-color: black;
+    padding: 1rem 2rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin-left: 2rem;
+  }
+  .nav-links li a {
+    color: white;
+    font-weight: 500;
+  }
+  .get-started {
+    background-color: orange;
+    color: black;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }

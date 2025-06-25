@@ -1,0 +1,19 @@
+.featured-section {
+    padding: 2rem;
+    background-color: #111;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .product-card img {
+    width: 100%;
+    border-radius: 8px;
+  }

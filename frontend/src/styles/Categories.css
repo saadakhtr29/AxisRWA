@@ -1,0 +1,28 @@
+.categories {
+    padding: 2rem;
+    background-color: #111;
+    color: white;
+    text-align: center;
+  }
+  .category-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .category-card {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 200px;
+  }
+  .category-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  .category-card p {
+    padding: 0.5rem;
+    font-weight: bold;
+  }
