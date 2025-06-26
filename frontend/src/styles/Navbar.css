@@ -1,30 +1,83 @@
+.navbar-container {
+  display: flex;
+  gap: 190px;
+  margin-top: 20px;
+  justify-content: space-around;
+  /* margin-left: 50px; */
+}
+
 .navbar {
-    background-color: black;
-    padding: 1rem 2rem;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin-left: 2rem;
-  }
-  .nav-links li a {
-    color: white;
-    font-weight: 500;
-  }
-  .get-started {
-    background-color: orange;
-    color: black;
-    padding: 0.5rem 1.2rem;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 5;
+}
+
+/* Logo styling */
+.navbar .logo {
+  font-family: Snell Roundhand, cursive;
+  font-weight: 500;
+  font-size: 24px;
+  color: orange;
+  padding: 9px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo {
+  margin-left: 220px;
+}
+
+.logo b {
+  font-family: Helvetica, sans-serif;
+  color: white;
+}
+
+/* Links container */
+.navbar .links {
+  display: flex;
+  gap: 30px; /* Space between links */
+}
+
+/* Links styling */
+.navbar .links a {
+  text-decoration: none;
+  font-size: 19px;
+  color: #a2a2a2;
+  font-family: Helvetica, sans-serif;
+  font-weight: 200;
+  position: relative; /* For hover underline effect */
+  transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.navbar .links a:hover {
+  color: #d9d9d9;
+}
+
+.navbar .links a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: orange;
+  transition: width 0.3s ease;
+}
+
+.navbar .links a:hover::after {
+  width: 100%;
+}
+
+.get-started {
+  background-color: orange;
+  color: black;
+  font-size: 16px;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 155px;
+}

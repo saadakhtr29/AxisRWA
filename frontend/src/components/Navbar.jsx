@@ -1,17 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import '../styles/Navbar.css';
 
 export default function Navbar() {
+
+  const navigate = useNavigate();
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
+    <nav className="navbar-container">
+      <div className="navbar">
+      <div className="links">
+          <a href="/">Marketplace</a>
+          <a href="/">How It Works</a>
+          <a href="/">Home</a>
+        </div>
         <span className="logo">Axis <b>RWA</b></span>
-        <ul className="nav-links">
-          <li><a href="/">Marketplace</a></li>
-          <li><a href="/">How It Works</a></li>
-          <li><a href="/">Home</a></li>
-        </ul>
       </div>
-      <button className="get-started">GET STARTED</button>
+      <button className="get-started" onClick={() => navigate("/signup")}>GET STARTED</button>
     </nav>
   );
 }
