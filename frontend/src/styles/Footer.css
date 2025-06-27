@@ -16,6 +16,7 @@
   .newsletter input {
     padding: 0.5rem;
     border: none;
+    background-color: white;
     border-radius: 5px 0 0 5px;
     flex: 1;
   }
