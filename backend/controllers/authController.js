@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
-// Generate dummy wallet (replace with actual wallet logic)
 const generateDummyWallet = () => {
   return (
     "0x" +
@@ -15,35 +14,26 @@ const generateDummyWallet = () => {
   );
 };
 
+// Register: verify idToken, sync with DB
 const register = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { idToken, role } = req.body;
 
-    const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) {
-      return res.status(400).json({ message: "User already exists in DB" });
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    const { uid, email } = decoded;
+
+    let user = await prisma.user.findUnique({ where: { uid } });
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          uid,
+          email,
+          role: role || "user",
+          wallet: generateDummyWallet(),
+        },
+      });
     }
-
-    let fbUser;
-    try {
-      fbUser = await admin.auth().createUser({ email, password });
-    } catch (firebaseErr) {
-      if (firebaseErr.code === "auth/email-already-exists") {
-        return res
-          .status(400)
-          .json({ message: "Email already exists in Firebase" });
-      }
-      throw firebaseErr;
-    }
-
-    const user = await prisma.user.create({
-      data: {
-        uid: fbUser.uid,
-        email,
-        role,
-        wallet: generateDummyWallet(),
-      },
-    });
 
     const token = jwt.sign(
       { uid: user.uid, email: user.email, role: user.role },
@@ -60,6 +50,7 @@ const register = async (req, res) => {
   }
 };
 
+// Login: verify idToken and issue backend token
 const login = async (req, res) => {
   try {
     const { idToken } = req.body;
@@ -68,7 +59,7 @@ const login = async (req, res) => {
     const user = await prisma.user.findUnique({ where: { uid: decoded.uid } });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found in database" });
     }
 
     const token = jwt.sign(
