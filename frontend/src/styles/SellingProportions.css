@@ -4,29 +4,63 @@
     height: 661px;
     margin: 150px 0px 150px 0px;
 }
-.selling-proportions-container h1{
-    font-size: 2.5rem;
+.selling-proportions-content{
+    font-size: 1.2rem;
     font-weight: 550;
+    font-family: Oxygen;
     color: orange;
     padding-top: 200px;
     padding-left: 90px;
-    width: 40%;
+    width: 45%;
 }
 .read-more-button{
     background-color: #111;
     color: white;
     font-size: 17px;
     font-weight: 580;
+    font-family: Oxygen;
     padding: 10px 20px;
     border-radius: 30px;
     border: none;
     cursor: pointer;
     height: 50px;
     width: 150px;
-    margin: 30px 110px;
+    margin: 30px 0px;
 }  
 .read-more-button:hover{
     background-color: black;
     color: #e3e3e3;
     transition: 0.3s ease;
+}
+.selling-proportions-idk-what{
+    display: flex;
+}
+.selling-proportions-texts{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin-top: 200px;
+    width: 50%;
+    padding-left: 100px;
+}
+.selling-proportions-texts p{
+    font-size: 18px;
+    font-family: Oxygen;
+}
+.selling-proportions-subtext{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+.selling-proportions-subtext h2{
+    color: orange;
+    font-family: Oxygen;
+    font-size: 50px;
+    padding: 35px 0px 25px 0px;
+}
+.selling-proportions-subtext p{
+    font-family:  Oxygen;
+    font-weight: lighter;
+    font-size: 15px;
+    width: 250px;
 }

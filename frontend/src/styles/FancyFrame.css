@@ -22,8 +22,9 @@
   }
 
   .dashboard-ops-center p{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: lighter;
+    font-family: Oxygen;
     color: white;
     padding-top: 20px;
     padding-left: 20px;
@@ -48,8 +49,9 @@
     padding-left: 15px;
   }
   .dashboard-talktrack p{
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     font-weight: lighter;
+    font-family: Oxygen;
     color: white;
     padding-top: 20px;
     padding-left: 20px;
