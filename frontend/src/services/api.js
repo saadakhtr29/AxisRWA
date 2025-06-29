@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8000/api"; 
+const API_BASE_URL =import.meta.env.VITE_BASE_URL; 
 
 export async function fetchFeaturedProducts() {
   const response = await fetch(`${API_BASE_URL}/assets`);
