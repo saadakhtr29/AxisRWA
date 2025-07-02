@@ -1,4 +1,3 @@
-// AuthProvider.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     const firebaseUser = userCredential.user;
     const idToken = await firebaseUser.getIdToken();
 
-    const res = await fetch(`${process.env.VITE_BASE_URL}/auth/register`, {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken, role: "user" }),
@@ -52,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     const firebaseUser = userCredential.user;
     const idToken = await firebaseUser.getIdToken();
 
-    const res = await fetch(`${process.env.BASE_URL}/auth/login`, {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken }),

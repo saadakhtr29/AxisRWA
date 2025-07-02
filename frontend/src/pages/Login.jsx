@@ -16,7 +16,7 @@ export default function LoginPage() {
       const token = await userCredential.user.getIdToken();
       localStorage.setItem("authToken", token);
       alert("Welcome back!");
-      navigate("/dashboard");
+      navigate("/");
     } catch (e) {
       alert("Login failed: " + e.message);
     }
