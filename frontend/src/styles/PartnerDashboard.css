@@ -1,0 +1,33 @@
+.partner-dashboard, .admin-dashboard {
+    padding: 2rem;
+    color: white;
+    background-color: #121212;
+  }
+  
+  .partner-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .partner-tabs button {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    background: #1f1f1f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .partner-tabs button.active,
+  .partner-tabs button:hover {
+    background: #0d6efd;
+    color: #fff;
+  }
+  
+  .partner-content, .admin-content {
+    margin-top: 1rem;
+  }

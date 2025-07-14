@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
-import Authgif from "../assets/a4cf01a2edfaf1b62c83b31ab78361e5.gif"
+import Authgif from "../assets/a4cf01a2edfaf1b62c83b31ab78361e5.gif";
 import "../styles/loginPage.css";
 
 export default function LoginPage() {
@@ -12,11 +12,23 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const userCredential = await login(email, password);
-      const token = await userCredential.user.getIdToken();
-      localStorage.setItem("authToken", token);
+      const user = await login(email, password);
       alert("Welcome back!");
-      navigate("/");
+
+      // Role-based navigation
+      switch (user.role) {
+        case "admin":
+          navigate("/admin");
+          break;
+        case "partner":
+          navigate("/partner");
+          break;
+        case "investor":
+        case "user":
+        default:
+          navigate("/dashboard");
+          break;
+      }
     } catch (e) {
       alert("Login failed: " + e.message);
     }
@@ -25,11 +37,7 @@ export default function LoginPage() {
   return (
     <div className="login-page-wrapper">
       <div className="login-container">
-        <img
-          className="login-gif"
-          src={Authgif}
-          alt="Login-gif"
-        />
+        <img className="login-gif" src={Authgif} alt="Login-gif" />
         <div className="login-contents">
           <h1 className="login-header">Welcome back!</h1>
           <p className="login-text">
