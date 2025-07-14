@@ -7,6 +7,8 @@ const {
   approveAsset,
   updateAsset,
   deleteAsset,
+  getAllSubmittedAssets,
+  rejectAsset,
 } = require("../controllers/assetController");
 
 const {
@@ -14,13 +16,24 @@ const {
   roleMiddleware,
 } = require("../middleware/authMiddleware");
 
+const rateLimit = require("express-rate-limit");
+
 const router = express.Router();
 
-// Public
-router.get("/", getAllAssets);
-router.get("/:id", getAssetById);
+// Rate limiter to avoid abuse
+const assetLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 mins
+  max: 100,
+  message: "Too many requests, please try again later.",
+});
 
-// Partner-only
+router.use(assetLimiter); // Apply to all routes
+
+// Public Routes
+router.get("/", getAllAssets); // paginated
+router.get("/:id", getAssetById); // asset detail
+
+// Partner-only Routes
 router.post("/", authMiddleware, roleMiddleware(["partner"]), createAsset);
 router.get(
   "/partner/all",
@@ -41,12 +54,33 @@ router.delete(
   deleteAsset
 );
 
-// Admin-only
+// Admin-only Route
 router.put(
   "/approve/:id",
   authMiddleware,
   roleMiddleware(["admin"]),
   approveAsset
+);
+
+router.get(
+  "/admin/all",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  getAllSubmittedAssets
+);
+
+router.put(
+  "/approve/:id",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  approveAsset
+);
+
+router.put(
+  "/reject/:id",
+  authMiddleware,
+  roleMiddleware(["admin"]),
+  rejectAsset
 );
 
 module.exports = router;

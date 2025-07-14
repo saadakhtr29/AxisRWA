@@ -1,9 +1,9 @@
 const admin = require("../config/firebase");
 const jwt = require("jsonwebtoken");
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient, Role } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const generateDummyWallet = () => {
   return (
@@ -25,11 +25,13 @@ const register = async (req, res) => {
     let user = await prisma.user.findUnique({ where: { uid } });
 
     if (!user) {
+      const safeRole = Object.values(Role).includes(role) ? role : Role.investor;
+
       user = await prisma.user.create({
         data: {
           uid,
           email,
-          role: role || "user",
+          role: safeRole,
           wallet: generateDummyWallet(),
         },
       });
@@ -41,7 +43,7 @@ const register = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    return res.status(201).json({ token, user });
+    return res.status(201).json({ token, role: user.role, user });
   } catch (err) {
     console.error("Register Error:", err);
     return res
@@ -68,7 +70,7 @@ const login = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    return res.status(200).json({ token, user });
+    return res.status(200).json({ token, role: user.role, user });
   } catch (err) {
     console.error("Login Error:", err);
     return res
@@ -81,6 +83,10 @@ const assignRole = async (req, res) => {
   try {
     const { email, role } = req.body;
 
+    if (!Object.values(Role).includes(role)) {
+      return res.status(400).json({ message: "Invalid role" });
+    }
+    
     const user = await prisma.user.update({
       where: { email },
       data: { role },
