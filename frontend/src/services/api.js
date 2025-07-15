@@ -6,6 +6,20 @@ const API_BASE_URL = import.meta.env.VITE_BASE_URL;
  * - Throws error if request fails or data is not an array.
  * * Fetch approved featured assets (default limit = 6)
  */
+export async function signup(email, password, role, wallet, idToken) {
+  const res = await fetch(`${API_BASE_URL}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idToken, role, wallet }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Signup failed");
+  }
+
+  return await res.json();
+}
 
 // Create new asset
 export async function createAsset({ title, valuation, tokenSupply }) {
@@ -223,6 +237,93 @@ export async function rejectAsset(id, reason) {
     return await response.json();
   } catch (error) {
     console.error("Error in rejectAsset():", error.message);
+    throw error;
+  }
+}
+
+export async function purchaseOwnership(assetId, quantity, txHash) {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${API_BASE_URL}/ownership/purchase`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ assetId, quantity, txHash }),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error?.error || "Ownership purchase failed");
+  }
+
+  return await res.json();
+}
+
+export async function updateUserRole(userId, role) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}/admin/user/${userId}/role`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ role }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error?.message || "Failed to update user role");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error in updateUserRole():", error.message);
+    throw error;
+  }
+}
+
+export async function getAllUsers() {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}/admin/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || "Failed to fetch users");
+    }
+
+    const data = await response.json();
+    return data.users || [];
+  } catch (error) {
+    console.error("Error in getAllUsers():", error.message);
+    throw error;
+  }
+}
+
+export async function banUser(userId) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_BASE_URL}/admin/user/${userId}/ban`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || "Failed to ban user");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error in banUser():", error.message);
     throw error;
   }
 }

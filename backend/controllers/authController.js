@@ -17,7 +17,7 @@ const generateDummyWallet = () => {
 // Register: verify idToken, sync with DB
 const register = async (req, res) => {
   try {
-    const { idToken, role } = req.body;
+    const { idToken, role, wallet } = req.body;
 
     const decoded = await admin.auth().verifyIdToken(idToken);
     const { uid, email } = decoded;
@@ -25,16 +25,22 @@ const register = async (req, res) => {
     let user = await prisma.user.findUnique({ where: { uid } });
 
     if (!user) {
-      const safeRole = Object.values(Role).includes(role) ? role : Role.investor;
+      const safeRole = Object.values(Role).includes(role)
+        ? role
+        : Role.investor;
 
       user = await prisma.user.create({
         data: {
           uid,
           email,
           role: safeRole,
-          wallet: generateDummyWallet(),
+          wallet: wallet,
         },
       });
+    }
+
+    if (!wallet || !wallet.startsWith("0x") || wallet.length !== 42) {
+      return res.status(400).json({ message: "Invalid wallet address" });
     }
 
     const token = jwt.sign(
@@ -79,28 +85,7 @@ const login = async (req, res) => {
   }
 };
 
-const assignRole = async (req, res) => {
-  try {
-    const { email, role } = req.body;
-
-    if (!Object.values(Role).includes(role)) {
-      return res.status(400).json({ message: "Invalid role" });
-    }
-    
-    const user = await prisma.user.update({
-      where: { email },
-      data: { role },
-    });
-
-    return res.status(200).json({ message: "Role updated", user });
-  } catch (err) {
-    console.error("Assign Role Error:", err);
-    return res
-      .status(500)
-      .json({ message: "Failed to update role", error: err.message });
-  }
-};
-
+// Get current user using JWT
 const getCurrentUser = async (req, res) => {
   return res.status(200).json({ user: req.user });
 };
@@ -108,6 +93,5 @@ const getCurrentUser = async (req, res) => {
 module.exports = {
   register,
   login,
-  assignRole,
   getCurrentUser,
 };

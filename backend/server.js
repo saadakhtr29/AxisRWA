@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const assetRoutes = require("./routes/assetRoutes");
 const ownershipRoutes = require("./routes/ownershipRoutes");
 const roiRoutes = require("./routes/roiRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 const prisma = new PrismaClient();
@@ -23,9 +24,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/assets", assetRoutes);
 app.use("/api/ownership", ownershipRoutes);
 app.use("/api/roi", roiRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Health check
-app.get("/", (req, res) => res.send("✅ AXISRWA API is running."));
+app.get("/", (req, res) => res.send("AXISRWA API is running."));
 
 // Start server
 const PORT = process.env.PORT || 8000;

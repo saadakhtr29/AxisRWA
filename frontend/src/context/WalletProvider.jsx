@@ -1,37 +1,78 @@
-import { WagmiConfig, createConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum } from "@wagmi/chains";
-import { createPublicClient, http } from "viem";
-import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import React from "react";
+import { createConfig, WagmiConfig } from "wagmi";
+import { polygon, mainnet } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  RainbowKitProvider,
+  getDefaultWallets,
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
+import { createPublicClient, http } from "viem";
 
-const chains = [mainnet, polygon, optimism, arbitrum];
+// REOWN-specific imports
+import { createAppKit } from "@reown/appkit/react";
+import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import {
+  polygon as reownPolygon,
+  mainnet as reownMainnet,
+} from "@reown/appkit/networks";
 
-const publicClient = createPublicClient({
-  chain: mainnet, // use default chain (required by viem)
-  transport: http(),
+// ENV VAR check
+const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
+if (!projectId) throw new Error("VITE_REOWN_PROJECT_ID is not defined");
+
+// AppKit SDK initialization
+const adapter = new WagmiAdapter({
+  projectId,
+  networks: [reownPolygon, reownMainnet],
+  ssr: false,
 });
+
+createAppKit({
+  adapters: [adapter],
+  projectId,
+  networks: [reownPolygon, reownMainnet],
+  metadata: {
+    name: "AxisRWA",
+    description: "Fractional RWA Ownership",
+    url: window.location.origin,
+    icons: [],
+  },
+});
+
+// WAGMI + RainbowKit setup
+const chains = [polygon]; // wagmi chains
 
 const { connectors } = getDefaultWallets({
   appName: "AxisRWA",
-  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID, // replace this with your WalletConnect project ID
+  projectId,
   chains,
 });
-
-// Create QueryClient
-const queryClient = new QueryClient();
 
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient,
+  publicClient: createPublicClient({
+    chain: polygon,
+    transport: http(),
+  }),
   chains,
+
+  // Optional but good to add if ever used web sockets:
+  // webSocketPublicClient: createPublicClient({
+  //   chain: polygon,
+  //   transport: webSocket(),
+  // }),
 });
+
+// Final Provider
+const queryClient = new QueryClient();
 
 export function WalletProvider({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
       <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider chains={chains}>
+        <RainbowKitProvider chains={chains} theme={darkTheme()}>
           {children}
         </RainbowKitProvider>
       </WagmiConfig>

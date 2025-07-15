@@ -1,4 +1,6 @@
 const adminService = require("../services/adminService");
+const { PrismaClient, Role } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 exports.getPendingAssets = async (req, res) => {
   const assets = await adminService.getPendingAssets();
@@ -25,8 +27,25 @@ exports.getPlatformStats = async (req, res) => {
 exports.updateUserRole = async (req, res) => {
   const { userId } = req.params;
   const { role } = req.body;
-  await adminService.updateUserRole(userId, role);
-  res.json({ message: `User role updated to ${role}` });
+
+  if (!Object.values(Role).includes(role)) {
+    return res.status(400).json({ message: "Invalid role provided" });
+  }
+
+  try {
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { role },
+    });
+
+    res.status(200).json({
+      message: `Role updated to ${role}`,
+      user: { id: user.id, email: user.email, role: user.role },
+    });
+  } catch (error) {
+    console.error("Role update error:", error);
+    res.status(500).json({ message: "Failed to update role" });
+  }
 };
 
 exports.banUser = async (req, res) => {
@@ -45,4 +64,23 @@ exports.reviewKYC = async (req, res) => {
   const { action } = req.body; // "approved" | "rejected"
   const result = await adminService.reviewKYCFile(kycId, action);
   res.json(result);
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        wallet: true,
+        createdAt: true,
+      },
+    });
+
+    res.status(200).json({ users });
+  } catch (err) {
+    console.error("Failed to fetch users", err);
+    res.status(500).json({ message: "Error retrieving users" });
+  }
 };
