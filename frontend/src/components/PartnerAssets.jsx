@@ -55,6 +55,15 @@ export default function PartnerAssets() {
           {assets.map((asset) => (
             <div key={asset.id} className="asset-card">
               <h3>{asset.title}</h3>
+
+              {asset.imageUrl && (
+                <img
+                  src={asset.imageUrl}
+                  alt={asset.title}
+                  className="asset-thumbnail"
+                />
+              )}
+
               <p>Valuation: ${asset.valuation.toLocaleString()}</p>
               <p>Token Supply: {asset.tokenSupply}</p>
               <p>Status: {asset.approved ? "✅ Approved" : "⏳ Pending"}</p>

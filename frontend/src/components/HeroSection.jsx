@@ -1,4 +1,4 @@
-import "../styles/HeroSection.css";
+import "../styles/HeroSection.css"
 
 export default function HeroSection() {
   return (
@@ -18,19 +18,19 @@ export default function HeroSection() {
         </span>
       </div>
       <div className="cards-container">
-          <div className="cards">
-            {/* <h2></h2> */}
-            {/* <p>Invest in tokenized real-world assets on Ethereum.</p> */}
-          </div>
-          <div className="cards">
-            {/* <h2 className="card-title"></h2> */}
-            {/* <p>Fractional. Fractional. Fractional.</p> */}
-          </div>
-          <div className="cards">
-            {/* <h2 className="card-title"></h2> */}
-            {/* <p>Invest in tokenized real-world assets on Ethereum.</p> */}
-          </div>
+        <div className="cards">
+          {/* <h2></h2> */}
+          <p>Invest in tokenized real-world assets on Ethereum.</p>
         </div>
+        <div className="cards">
+          {/* <h2 className="card-title"></h2> */}
+          <p>Fractional. Fractional. Fractional.</p>
+        </div>
+        <div className="cards">
+          {/* <h2 className="card-title"></h2> */}
+          <p>Invest in tokenized real-world assets on Ethereum.</p>
+        </div>
+      </div>
     </section>
   );
 }

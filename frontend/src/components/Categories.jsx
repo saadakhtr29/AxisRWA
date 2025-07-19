@@ -1,11 +1,16 @@
-import '../styles/Categories.css';
+import "../styles/Categories.css";
 
-export default function Categories() {
+import realEstateImg from "../assets/images/real-estate.jpg";
+import automobileImg from "../assets/images/automobile.jpg";
+import solarPanelImg from "../assets/images/solar-panel.avif";
+import evChargingImg from "../assets/images/ev-charging-stations.jpg";
+
+export const Categories = () => {
   const categories = [
-    { name: 'Real Estate', image: '/images/real-estate.jpg' },
-    { name: 'Automobile', image: '/images/car.jpg' },
-    { name: 'Solar Panels', image: '/images/solar.jpg' },
-    { name: 'EV Charging Stations', image: '/images/ev.jpg' },
+    { name: "Real Estate", image: realEstateImg },
+    { name: "Automobile", image: automobileImg },
+    { name: "Solar Panels", image: solarPanelImg },
+    { name: "EV Charging Stations", image: evChargingImg },
   ];
 
   return (
@@ -21,4 +26,4 @@ export default function Categories() {
       </div>
     </section>
   );
-}
+};

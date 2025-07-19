@@ -3,12 +3,12 @@ import Home from "./pages/Home";
 import SignupPage from "./pages/Signup";
 import LoginPage from "./pages/Login";
 import InvestorDashboard from "./pages/InvestorDashboard";
-import PartnerDashboard from "./pages/PartnerDashboard";
+import {PartnerDashboard} from "./pages/PartnerDashboard";
 import AdminPage from "./pages/AdminDashboard";
-import Unauthorized from "./components/Unauthorized";
+import {Unauthorized} from "./components/Unauthorized";
 
 // import ProtectedRoute from "./components/ProtectedRoute";
-import RoleProtectedRoute from "./components/RoleProtectedRoute";
+import {RoleProtectedRoute} from "./components/RoleProtectedRoute";
 
 export default function App() {
   return (

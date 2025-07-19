@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
-const RoleProtectedRoute = ({ allowedRoles, children }) => {
+export const RoleProtectedRoute = ({ allowedRoles, children }) => {
   const { currentUser, userRole, loading } = useAuth();
 
   if (loading) return null; // or a loader
@@ -13,5 +13,3 @@ const RoleProtectedRoute = ({ allowedRoles, children }) => {
 
   return children;
 };
-
-export default RoleProtectedRoute;

@@ -71,7 +71,7 @@ export async function updateAsset(id, { title, valuation, tokenSupply }) {
   }
 }
 
-export async function fetchFeaturedProducts(limit = 6) {
+export async function fetchFeaturedProducts(limit = 4) {
   try {
     const response = await fetch(`${API_BASE_URL}/assets?limit=${limit}`);
     if (!response.ok)
@@ -324,6 +324,35 @@ export async function banUser(userId) {
     return await response.json();
   } catch (error) {
     console.error("Error in banUser():", error.message);
+    throw error;
+  }
+}
+
+/**
+ * Upload an image for a specific asset (partner only)
+ * Requires FormData with key "image"
+ */
+export async function uploadAssetImage(assetId, formData) {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_BASE_URL}/assets/${assetId}/upload`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // Do NOT set Content-Type manually; browser will set proper multipart boundary
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorMsg = await response.text();
+      throw new Error(errorMsg || "Failed to upload asset image");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error in uploadAssetImage():", error.message);
     throw error;
   }
 }

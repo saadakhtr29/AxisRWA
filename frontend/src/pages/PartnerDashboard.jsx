@@ -4,7 +4,7 @@ import AssetForm from "../components/AssetForm";
 import AssetDetails from "../components/AssetDetails";
 import "../styles/PartnerDashboard.css";
 
-const PartnerDashboard = () => {
+export const PartnerDashboard = () => {
   const [activeTab, setActiveTab] = useState("assets");
   const [selectedAssetId, setSelectedAssetId] = useState(null);
 
@@ -51,5 +51,3 @@ const PartnerDashboard = () => {
     </div>
   );
 };
-
-export default PartnerDashboard;

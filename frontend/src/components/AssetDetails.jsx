@@ -59,6 +59,16 @@ export default function AssetDetails() {
   return (
     <section className="asset-details">
       <h2>{asset.title}</h2>
+
+      {asset.imageUrl && (
+        <img
+          src={asset.imageUrl}
+          alt={asset.title}
+          className="asset-full-image"
+          style={{ maxWidth: "100%", height: "auto", marginBottom: "1rem" }}
+        />
+      )}
+
       <p>
         <strong>Valuation:</strong> ${asset.valuation.toLocaleString()}
       </p>
