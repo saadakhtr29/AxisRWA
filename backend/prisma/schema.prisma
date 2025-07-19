@@ -15,45 +15,53 @@ enum Role {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  uid          String        @unique
-  email        String        @unique
-  role         Role          @default(investor)
-  wallet       String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id        String   @id @default(uuid())
+  uid       String   @unique
+  email     String   @unique
+  role      Role     @default(investor)
+  wallet    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  assets        Asset[]       @relation("PartnerAssets")
-  ownerships    OwnershipToken[]
-  roiTokens     RoiToken[]
-  notifications Notification[]
-  kycFiles      KYCFile[]
+  assets         Asset[]          @relation("PartnerAssets")
+  approvedAssets Asset[]          @relation("ApprovedAssets")
+  ownerships     OwnershipToken[]
+  roiTokens      RoiToken[]
+  notifications  Notification[]
+  kycFiles       KYCFile[]
 }
 
 model Asset {
-  id              String   @id @default(uuid())
+  id              String    @id @default(uuid())
   partnerID       String
   title           String
   valuation       Float
   tokenSupply     Int
-  approved        Boolean  @default(false)
-  status          String   @default("pending") // "pending", "approved", "rejected"
+  approved        Boolean   @default(false)
+  approvedBy      String?
+  approvedAt      DateTime?
+  status          String    @default("pending") // "pending", "approved", "rejected"
   rejectionReason String?
   rejectedAt      DateTime?
   rejectedBy      String?
-  isDeleted       Boolean  @default(false)
+  isDeleted       Boolean   @default(false)
   description     String?
   location        String?
   imageUrl        String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  cloudinaryPublicId String?
+  cloudinaryBytes    Int?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   // Relations
   partner        User             @relation("PartnerAssets", fields: [partnerID], references: [uid])
+  approver User? @relation("ApprovedAssets", fields: [approvedBy], references: [uid])
   ownerships     OwnershipToken[]
   roiTokens      RoiToken[]
   revenueReports RevenueReport[]
+
+   @@index([approvedBy])
 }
 
 model OwnershipToken {
@@ -64,8 +72,8 @@ model OwnershipToken {
   txHash    String   @unique
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id])
-  asset     Asset    @relation(fields: [assetId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+  asset Asset @relation(fields: [assetId], references: [id])
 }
 
 model RoiToken {
@@ -75,8 +83,8 @@ model RoiToken {
   amount        Float
   distributedAt DateTime
 
-  user          User     @relation(fields: [userId], references: [id])
-  asset         Asset    @relation(fields: [assetId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+  asset Asset @relation(fields: [assetId], references: [id])
 }
 
 model RevenueReport {
@@ -87,7 +95,7 @@ model RevenueReport {
   period        String
   createdAt     DateTime @default(now())
 
-  asset         Asset    @relation(fields: [assetId], references: [id])
+  asset Asset @relation(fields: [assetId], references: [id])
 }
 
 model Notification {
@@ -98,7 +106,7 @@ model Notification {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model KYCFile {
@@ -109,5 +117,5 @@ model KYCFile {
   submittedAt DateTime  @default(now())
   reviewedAt  DateTime?
 
-  user        User      @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }

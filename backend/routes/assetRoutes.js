@@ -9,12 +9,14 @@ const {
   deleteAsset,
   getAllSubmittedAssets,
   rejectAsset,
+  uploadAssetImage,
 } = require("../controllers/assetController");
 
 const {
   authMiddleware,
   roleMiddleware,
 } = require("../middleware/authMiddleware");
+const upload = require('../middleware/multer');
 
 const rateLimit = require("express-rate-limit");
 
@@ -54,6 +56,14 @@ router.delete(
   deleteAsset
 );
 
+router.put(
+  "/:id/upload",
+  authMiddleware,
+  roleMiddleware(["partner"]),
+  upload.single("image"),
+  uploadAssetImage
+);
+
 // Admin-only Route
 router.put(
   "/approve/:id",
@@ -67,13 +77,6 @@ router.get(
   authMiddleware,
   roleMiddleware(["admin"]),
   getAllSubmittedAssets
-);
-
-router.put(
-  "/approve/:id",
-  authMiddleware,
-  roleMiddleware(["admin"]),
-  approveAsset
 );
 
 router.put(
