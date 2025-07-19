@@ -43,9 +43,9 @@ export default function PartnerAssets() {
     <section className="partner-assets">
       <div className="partner-assets-header">
         <h2>Your Submitted Assets</h2>
-        <Link to="/partner/create" className="btn-primary">
+        {/* <Link to="/partner/create" className="btn-primary">
           + Create New Asset
-        </Link>
+        </Link> */}
       </div>
 
       {assets.length === 0 ? (
@@ -66,7 +66,13 @@ export default function PartnerAssets() {
 
               <p>Valuation: ${asset.valuation.toLocaleString()}</p>
               <p>Token Supply: {asset.tokenSupply}</p>
-              <p>Status: {asset.approved ? "✅ Approved" : "⏳ Pending"}</p>
+              <span
+                className={`asset-status ${
+                  asset.approved ? "approved" : "pending"
+                }`}
+              >
+                {asset.approved ? "✅ Approved" : "⏳ Pending"}
+              </span>
 
               <div className="card-actions">
                 <button onClick={() => navigate(`/partner/edit/${asset.id}`)}>

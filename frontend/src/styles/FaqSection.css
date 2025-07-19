@@ -1,24 +1,89 @@
 .faq {
-    padding: 2rem;
-    background-color: #000;
-    color: white;
+  padding: 4vh 5vw;
+  background-color: #000;
+  color: white;
+}
+
+.faq-grid {
+  max-width: 60vw;
+  width: 100%;
+  margin: auto;
+}
+
+details {
+  background: #1a1a1a;
+  padding: 2vh 2vw;
+  margin-bottom: 2vh;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+details:hover {
+  background: #2a2a2a;
+}
+
+details summary {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+details p {
+  margin-top: 1vh;
+  color: #ccc;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Small devices (≤ 768px) */
+@media (max-width: 768px) {
+  .faq {
+    padding: 4vh 4vw;
   }
+
   .faq-grid {
-    max-width: 800px;
-    margin: auto;
+    max-width: 90vw;
   }
+
   details {
-    background: #1a1a1a;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
+    padding: 3vh 4vw;
   }
+
   details summary {
-    font-weight: bold;
     font-size: 1rem;
   }
+
   details p {
-    margin-top: 0.5rem;
-    color: #ccc;
+    font-size: 0.95rem;
   }
+}
+
+/* Medium devices (769px – 1199px) */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .faq-grid {
+    max-width: 75vw;
+  }
+
+  details summary {
+    font-size: 1.1rem;
+  }
+
+  details p {
+    font-size: 1rem;
+  }
+}
+
+/* Large desktops (≥ 1200px) */
+@media (min-width: 1200px) {
+  .faq-grid {
+    max-width: 60vw;
+  }
+
+  details summary {
+    font-size: 1.2rem;
+  }
+
+  details p {
+    font-size: 1.05rem;
+  }
+}

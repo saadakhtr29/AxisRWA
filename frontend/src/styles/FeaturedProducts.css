@@ -2,37 +2,46 @@
   padding: 2rem;
   background-color: #000;
 }
+
 .featured-section-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 60px 20px 20px 20px;
+  flex-wrap: wrap;
+  margin: 4vh 2vw;
 }
+
 .featured-section-header h2 {
-  font-size: 2.5rem;
+  font-size: 2.5vw;
   font-weight: 600;
   color: white;
-  padding: 20px 20px 20px 20px;
+  padding: 2vh 1vw;
 }
+
 .featured-section-header p {
-  font-size: 16px;
+  font-size: 1.2vw;
   font-weight: lighter;
   font-family: Oxygen;
   color: white;
-  padding: 33px 20px 20px 00px;
+  padding: 3vh 1vw 2vh 0;
   width: 30%;
+  min-width: 240px;
 }
+
+/* Grid setup for product cards */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  gap: 2vw;
 }
+
 .product-card {
   background-color: #1a1a1a;
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
 }
+
 .product-card img {
   width: 100%;
   border-radius: 8px;
@@ -42,4 +51,103 @@
   color: red;
   font-size: 1rem;
   margin: 10px 0;
+}
+
+/* =================== Responsive Media Queries =================== */
+
+/* Extra Large Screens (1920px and above) */
+@media (min-width: 1920px) {
+  .featured-section-header h2 {
+    font-size: 2vw;
+  }
+
+  .featured-section-header p {
+    font-size: 1vw;
+    width: 25%;
+  }
+}
+
+/* Desktop Screens (1200px - 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .featured-section-header h2 {
+    font-size: 2.3vw;
+  }
+
+  .featured-section-header p {
+    font-size: 1.1vw;
+    width: 28%;
+  }
+}
+
+/* Large Tablets/Laptops (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .featured-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .featured-section-header h2 {
+    font-size: 2.8vw;
+  }
+
+  .featured-section-header p {
+    font-size: 1.2vw;
+    width: 80%;
+  }
+}
+
+/* Small Tablets (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .featured-section-header h2 {
+    font-size: 3.5vw;
+  }
+
+  .featured-section-header p {
+    font-size: 1.4vw;
+    width: 90%;
+  }
+}
+
+/* Extra Small Devices (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .featured-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .featured-section-header h2 {
+    font-size: 5.5vw;
+  }
+
+  .featured-section-header p {
+    font-size: 3.5vw;
+    width: 100%;
+  }
+}
+
+/* Mobile Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .featured-section {
+    padding: 1rem;
+  }
+
+  .featured-section-header {
+    flex-direction: column;
+    margin: 2vh 1vw;
+  }
+
+  .featured-section-header h2 {
+    font-size: 6vw;
+  }
+
+  .featured-section-header p {
+    font-size: 4vw;
+    width: 100%;
+    padding: 2vh 0;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
 }

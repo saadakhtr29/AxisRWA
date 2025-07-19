@@ -1,114 +1,205 @@
 .hero {
-  padding: 80px 30px 30px 30px;
+  padding: 10vh 5vw 5vh 5vw;
   text-align: left;
   background-color: #000;
   color: white;
 }
+
 .hero h1 {
   font-size: 2.9rem;
-  max-width: 850px;
-  margin: 0px 5px 0px 35px;
+  max-width: 70vw;
+  margin: 0 2vw 0 2vw;
 }
+
 .hero p {
   font-size: 1rem;
   color: #aaa;
-  margin: 10px 5px 40px 45px;
+  margin: 2vh 2vw 4vh 3vw;
 }
+
+/* Hero Animation Section */
 .hero-animation {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0)
-  );
-  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
   backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
-  height: 420px;
+  /* height: 60vh; */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
 }
+
 .hero-animation-box {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 20px;
-  margin-top: 250px;
-}
-.hero-animation-box-content {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0)
-  );
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 20px;
-  height: 100px;
-  width: 1100px;
-}
-.hero-animation-box-content-content {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0)
-  );
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
-  height: 100px;
-  width: 100px;
+  padding: 2vh 2vw;
+  margin-top: 15vh;
+  flex-wrap: wrap;
 }
 
+.hero-asset{
+  height: 100px;
+  width: 150px;
+  mix-blend-mode: screen;
+}
+
+.hero-animation-box-content {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  width: 85%;
+  height: 12vh;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+.hero-animation-box-content-content {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  width: 10vw;
+  height: 10vw;
+  max-width: 100px;
+  max-height: 100px;
+  min-width: 60px;
+  min-height: 60px;
+}
+
+/* Cards Section */
 .cards-container {
   display: flex;
   flex-direction: row;
   overflow-x: auto;
-  overflow-y: hidden;
-  gap: 20px;
-  padding: 20px 10px 20px 20px;
-  margin-top: 55px;
+  gap: 2vw;
+  padding: 3vh 2vw;
+  margin-top: 5vh;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 
+.cards-container::-webkit-scrollbar {
+  display: none;
+}
+
 .cards {
   background-color: #d9d9d9;
-  border: 1px;
   border-radius: 20px;
-  display: flex;
   flex: 0 0 auto;
+  display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  overflow: scroll;
+  width: 90vw;
   max-width: 430px;
-  height: 140px;
-  width: 100%;
-  padding: 3px 20px;
-  margin: 10px 0px 15px 0px;
+  height: 20vh;
+  padding: 2vh 4vw;
   z-index: 999;
 }
 
 .cards h2 {
-  font-size: 30px;
-  text-align: left;
-  justify-content: left;
-  margin: 20px 25px 0px 10px;
+  font-size: 2.2vw;
+  margin: 2vh 2vw 0 1vw;
   color: black;
 }
 
 .cards p {
-  font-size: 22px;
-  margin: 30px 10px;
+  font-size: 1.8vw;
+  margin: 2vh 1vw;
   color: black;
 }
 
 .card-title {
-  padding: 10px 120px 10px 0px;
+  padding: 1vh 10vw 1vh 0;
   color: black;
+}
+
+/* ─────────── MEDIA QUERIES ─────────── */
+
+/* Extra large screens (1920px and up) */
+@media (min-width: 1920px) {
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+  .cards {
+    height: 22vh;
+  }
+}
+
+/* Desktop screens (1200px - 1919px) */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+  .cards {
+    height: 20vh;
+  }
+}
+
+/* Large tablets/laptops (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+  .cards h2 {
+    font-size: 1.8vw;
+  }
+  .cards p {
+    font-size: 1.6vw;
+  }
+}
+
+/* Small tablets (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .hero-animation-box-content {
+    width: 90vw;
+  }
+  .cards {
+    height: auto;
+  }
+}
+
+/* Extra small devices (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 0.95rem;
+  }
+  .cards h2 {
+    font-size: 1.1rem;
+  }
+  .cards p {
+    font-size: 1rem;
+  }
+}
+
+/* Mobile (up to 480px) */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  .hero p {
+    font-size: 0.9rem;
+    margin-left: 0;
+  }
+  .hero-animation-box {
+    flex-direction: column;
+    margin-top: 10vh;
+  }
+  .hero-animation-box-content {
+    width: 95vw;
+    height: auto;
+  }
+  .hero-animation-box-content-content {
+    width: 15vw;
+    height: 15vw;
+  }
+  .cards {
+    padding: 2vh 5vw;
+  }
 }

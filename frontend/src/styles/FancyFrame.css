@@ -1,62 +1,125 @@
 .dashboard-main-row {
-    background-color: #000;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 40px;
-    gap: 20px;
-  }
-  .dashboard-ops-center {
-    flex: 0 0 280px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .dashboard-ops-center h1{
-    font-size: 2.1rem;
-    font-weight: 600;
-    color: white;
-    padding-top: 90px;
-    padding-left: 15px;
-  }
+  background-color: #000;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5vh;
+  gap: 2vw;
+  flex-wrap: wrap;
+}
 
-  .dashboard-ops-center p{
-    font-size: 1.1rem;
-    font-weight: lighter;
-    font-family: Oxygen;
-    color: white;
-    padding-top: 20px;
-    padding-left: 20px;
+.dashboard-ops-center {
+  flex: 1 1 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2vh 2vw;
+}
+
+.dashboard-ops-center h1 {
+  font-size: 2.3vw;
+  font-weight: 600;
+  color: white;
+  padding-top: 5vh;
+  padding-left: 1vw;
+}
+
+.dashboard-ops-center p {
+  font-size: 1.2vw;
+  font-weight: lighter;
+  font-family: Oxygen, sans-serif;
+  color: white;
+  padding-top: 2vh;
+  padding-left: 1.5vw;
+}
+
+.dashboard-orb-center {
+  flex: 1 1 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+}
+
+.dashboard-talktrack {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 2vh 2vw;
+}
+
+.dashboard-talktrack h1 {
+  font-size: 2.3vw;
+  font-weight: 600;
+  color: white;
+  padding-left: 1vw;
+}
+
+.dashboard-talktrack p {
+  font-size: 1.1vw;
+  font-weight: lighter;
+  font-family: Oxygen, sans-serif;
+  color: white;
+  padding-top: 2vh;
+  padding-left: 1vw;
+  text-align: right;
+}
+
+.home-asset-gif {
+  max-width: 100%;
+  height: auto;
+  mix-blend-mode: screen;
+}
+
+/* ================== Responsive Media Queries ================== */
+
+/* Tablets: 992px - 1199px */
+@media (max-width: 1199px) {
+  .dashboard-ops-center h1,
+  .dashboard-talktrack h1 {
+    font-size: 2.6vw;
   }
-  .dashboard-orb-center {
-    flex: 0 0 480px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .dashboard-ops-center p,
+  .dashboard-talktrack p {
+    font-size: 1.5vw;
   }
-  .dashboard-talktrack {
-    flex: 0 0 340px;
-    display: flex;
+}
+
+/* Small Tablets: 768px - 991px */
+@media (max-width: 991px) {
+  .dashboard-main-row {
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
   }
-  .dashboard-talktrack h1{
-    font-size: 2.1rem;
-    font-weight: 600;
-    color: white;
-    /* padding-top: 60px; */
-    padding-left: 15px;
+  .dashboard-ops-center,
+  .dashboard-talktrack,
+  .dashboard-orb-center {
+    flex: 1 1 100%;
+    align-items: center;
+    text-align: center;
   }
-  .dashboard-talktrack p{
-    font-size: 1.05rem;
-    font-weight: lighter;
-    font-family: Oxygen;
-    color: white;
-    padding-top: 20px;
-    padding-left: 20px;
-    text-align: right;
+  .dashboard-ops-center h1,
+  .dashboard-talktrack h1 {
+    font-size: 4vw;
   }
-  .home-asset-gif{
-    mix-blend-mode: screen;
+  .dashboard-ops-center p,
+  .dashboard-talktrack p {
+    font-size: 2.5vw;
+    text-align: center;
   }
+}
+
+/* Mobile: ≤ 767px */
+@media (max-width: 767px) {
+  .dashboard-ops-center h1,
+  .dashboard-talktrack h1 {
+    font-size: 5.2vw;
+  }
+  .dashboard-ops-center p,
+  .dashboard-talktrack p {
+    font-size: 3.5vw;
+    padding-left: 0;
+  }
+}

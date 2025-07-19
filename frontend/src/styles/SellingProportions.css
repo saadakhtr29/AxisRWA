@@ -1,66 +1,203 @@
 .selling-proportions-container {
-    background-color: white;
-    width: 100%;
-    height: 661px;
-    margin: 150px 0px 150px 0px;
+  background-color: white;
+  width: 100%;
+  height: auto;
+  padding: 8vh 5vw;
+  margin: 10vh 0;
 }
-.selling-proportions-content{
-    font-size: 1.2rem;
-    font-weight: 550;
-    font-family: Oxygen;
-    color: orange;
-    padding-top: 200px;
-    padding-left: 90px;
-    width: 45%;
+
+.selling-proportions-idk-what {
+  display: flex;
+  flex-wrap: wrap;
 }
-.read-more-button{
-    background-color: #111;
-    color: white;
-    font-size: 17px;
-    font-weight: 580;
-    font-family: Oxygen;
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    height: 50px;
-    width: 150px;
-    margin: 30px 0px;
-}  
-.read-more-button:hover{
-    background-color: black;
-    color: #e3e3e3;
-    transition: 0.3s ease;
+
+.selling-proportions-content {
+  font-size: 1.3vw;
+  font-weight: 550;
+  font-family: Oxygen, sans-serif;
+  color: orange;
+  width: 45%;
+  padding-left: 2vw;
+  padding-top: 12vh;
 }
-.selling-proportions-idk-what{
-    display: flex;
+
+.read-more-button {
+  background-color: #111;
+  color: white;
+  font-size: 1.2vw;
+  font-weight: 580;
+  font-family: Oxygen, sans-serif;
+  padding: 1.2vh 2vw;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  height: 6vh;
+  width: 12vw;
+  margin: 3vh 0;
 }
-.selling-proportions-texts{
-    display: flex;
+
+.read-more-button:hover {
+  background-color: black;
+  color: #e3e3e3;
+  transition: 0.3s ease;
+}
+
+.selling-proportions-texts {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  width: 50%;
+  padding-left: 3vw;
+  margin-top: 8vh;
+}
+
+.selling-proportions-texts p {
+  font-size: 1vw;
+  font-family: Oxygen, sans-serif;
+}
+
+.selling-proportions-subtext {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  flex-wrap: wrap;
+}
+
+.selling-proportions-subtext h2 {
+  color: orange;
+  font-family: Oxygen, sans-serif;
+  font-size: 3vw;
+  padding: 2vh 0;
+}
+
+.selling-proportions-subtext p {
+  font-family: Oxygen, sans-serif;
+  font-weight: lighter;
+  font-size: 1vw;
+  width: 15vw;
+}
+
+/* ========== 📱 MEDIA QUERIES ========== */
+
+/* Mobile (≤767px) */
+@media screen and (max-width: 767px) {
+  .selling-proportions-container {
+    padding: 5vh 4vw;
+    margin: 5vh 0;
+  }
+
+  .selling-proportions-idk-what {
     flex-direction: column;
-    color: black;
-    margin-top: 200px;
-    width: 50%;
-    padding-left: 100px;
+  }
+
+  .selling-proportions-content,
+  .selling-proportions-texts {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .selling-proportions-content {
+    font-size: 4.5vw;
+    padding-top: 5vh;
+  }
+
+  .read-more-button {
+    font-size: 4vw;
+    height: auto;
+    width: auto;
+    padding: 1.2vh 2vh;
+  }
+
+  .selling-proportions-texts p,
+  .selling-proportions-subtext p {
+    font-size: 4vw;
+    width: 100%;
+  }
+
+  .selling-proportions-subtext h2 {
+    font-size: 6vw;
+  }
+
+  .selling-proportions-subtext {
+    flex-direction: column;
+    gap: 2vh;
+  }
 }
-.selling-proportions-texts p{
-    font-size: 18px;
-    font-family: Oxygen;
+
+/* Small Tablets (768px–991px) */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .selling-proportions-content {
+    font-size: 2.2vw;
+  }
+
+  .read-more-button {
+    font-size: 2vw;
+    width: 30vw;
+  }
+
+  .selling-proportions-texts p {
+    font-size: 1.7vw;
+  }
+
+  .selling-proportions-subtext h2 {
+    font-size: 3.5vw;
+  }
+
+  .selling-proportions-subtext p {
+    font-size: 1.5vw;
+  }
 }
-.selling-proportions-subtext{
-    display: flex;
-    flex-direction: row;
-    gap: 5%;
+
+/* Laptops/Tablets (992px–1199px) */
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .selling-proportions-content {
+    font-size: 1.5vw;
+  }
+
+  .selling-proportions-texts p {
+    font-size: 1.2vw;
+  }
+
+  .selling-proportions-subtext h2 {
+    font-size: 2.7vw;
+  }
 }
-.selling-proportions-subtext h2{
-    color: orange;
-    font-family: Oxygen;
-    font-size: 50px;
-    padding: 35px 0px 25px 0px;
+
+/* Desktop (1200px–1919px) */
+@media screen and (min-width: 1200px) and (max-width: 1919px) {
+  .selling-proportions-content {
+    font-size: 1.2vw;
+  }
+
+  .read-more-button {
+    width: 10vw;
+  }
+
+  .selling-proportions-subtext h2 {
+    font-size: 2.5vw;
+  }
+
+  .selling-proportions-subtext p {
+    font-size: 1vw;
+  }
 }
-.selling-proportions-subtext p{
-    font-family:  Oxygen;
-    font-weight: lighter;
-    font-size: 15px;
-    width: 250px;
+
+/* Extra Large Screens (≥1920px) */
+@media screen and (min-width: 1920px) {
+  .selling-proportions-content {
+    font-size: 1vw;
+  }
+
+  .selling-proportions-texts p {
+    font-size: 0.9vw;
+  }
+
+  .selling-proportions-subtext h2 {
+    font-size: 2vw;
+  }
+
+  .selling-proportions-subtext p {
+    font-size: 0.8vw;
+  }
 }

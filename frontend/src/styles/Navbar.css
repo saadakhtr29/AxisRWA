@@ -1,31 +1,27 @@
+/* ===== Base Mobile-first ===== */
 .navbar-container {
   display: flex;
-  gap: 190px;
-  margin-top: 20px;
-  justify-content: space-around;
-  /* margin-left: 50px; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+  padding: 2vh 5vw;
 }
 
 .navbar {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  z-index: 5;
+  gap: 3vh;
+  width: 100%;
 }
 
-/* Logo styling */
 .navbar .logo {
   font-family: Snell Roundhand, cursive;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 5vw;
   color: orange;
-  padding: 9px;
   text-decoration: none;
-  white-space: nowrap;
-}
-
-.logo {
-  margin-left: 220px;
 }
 
 .logo b {
@@ -33,24 +29,23 @@
   color: white;
 }
 
-/* Links container */
 .navbar .links {
   display: flex;
-  gap: 30px; /* Space between links */
+  flex-direction: column;
+  gap: 2vh;
+  align-items: center;
 }
 
-/* Links styling */
 .navbar .links a {
   text-decoration: none;
-  font-size: 19px;
+  font-size: 4vw;
   color: #a2a2a2;
   font-family: Helvetica, sans-serif;
   font-weight: 200;
-  position: relative; /* For hover underline effect */
+  position: relative;
   transition: color 0.3s ease;
 }
 
-/* Hover effect */
 .navbar .links a:hover {
   color: #d9d9d9;
 }
@@ -73,11 +68,129 @@
 .get-started {
   background-color: orange;
   color: black;
-  font-size: 16px;
-  padding: 0.5rem 1.2rem;
+  font-size: 4vw;
+  padding: 1vh 3vw;
   border: none;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  width: 155px;
+  width: 50vw;
+}
+
+/* ===== Extra Small Devices (481px–767px) ===== */
+@media (min-width: 481px) and (max-width: 767px) {
+  .navbar .logo {
+    font-size: 5vw;
+  }
+
+  .navbar .links a {
+    font-size: 3.5vw;
+  }
+
+  .get-started {
+    width: 45vw;
+    font-size: 3.5vw;
+  }
+}
+
+/* ===== Small Tablets (768px–991px) ===== */
+@media (min-width: 768px) and (max-width: 991px) {
+  .navbar-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2vh 5vw;
+  }
+
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .navbar .links {
+    flex-direction: row;
+    gap: 2vw;
+  }
+
+  .navbar .logo {
+    font-size: 2.5vw;
+  }
+
+  .navbar .links a {
+    font-size: 2vw;
+  }
+
+  .get-started {
+    width: 20vw;
+    font-size: 1.8vw;
+  }
+}
+
+/* ===== Large Tablets / Laptops (992px–1199px) ===== */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .navbar .logo {
+    font-size: 2.2vw;
+  }
+
+  .navbar .links a {
+    font-size: 1.6vw;
+  }
+
+  .get-started {
+    width: 18vw;
+    font-size: 1.5vw;
+  }
+}
+
+/* ===== Desktop Screens (1200px–1919px) ===== */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  .navbar-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2vh 4vw;
+  }
+
+  .navbar {
+    /* display: flex; */
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-around; */
+    /* padding-left: 50px; */
+    gap: 25vh;
+  }
+
+  .navbar .links {
+    flex-direction: row;
+    gap: 2.5vw;
+  }
+
+  .navbar .logo {
+    font-size: 1.8vw;
+
+  }
+
+  
+  .navbar .links a {
+    font-size: 1.4vw;
+  }
+
+  .get-started {
+    width: 15vw;
+    font-size: 1.2vw;
+  }
+}
+
+/* ===== Extra Large Screens (1920px+) ===== */
+@media (min-width: 1920px) {
+  .navbar .logo {
+    font-size: 36px;
+  }
+
+  .navbar .links a {
+    font-size: 24px;
+  }
+
+  .get-started {
+    font-size: 20px;
+    width: 200px;
+  }
 }

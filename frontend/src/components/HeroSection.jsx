@@ -1,3 +1,4 @@
+import heroImg from "../assets/hero-img2.jpg";
 import "../styles/HeroSection.css"
 
 export default function HeroSection() {
@@ -12,6 +13,7 @@ export default function HeroSection() {
         {/* <button>Explore Marketplace</button> */}
       </div>
       <div className="hero-animation">
+        {/* <img className="hero-asset" src={heroImg} alt="hero-asset" /> */}
         <span className="hero-animation-box">
           <div className="hero-animation-box-content"></div>
           <div className="hero-animation-box-content-content"></div>

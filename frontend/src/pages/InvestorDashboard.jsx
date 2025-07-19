@@ -3,6 +3,7 @@ import { fetchFeaturedProducts } from "../services/api";
 import { useAuth } from "../context/AuthProvider";
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
+import "../styles/InvestorDashboard.css";
 
 export default function InvestorDashboard() {
   const [assets, setAssets] = useState([]);
@@ -97,68 +98,64 @@ export default function InvestorDashboard() {
     }
   };
 
-  if (loadingAssets) return <p>Loading assets...</p>;
+  if (loadingAssets) return <p className="loading">Loading assets...</p>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Featured Assets</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="investor-dashboard">
+      <h1>Featured Assets</h1>
+
+      <div className="asset-grid">
         {assets.map((asset) => (
-          <div key={asset.id} className="border rounded p-4 shadow">
-            <h2 className="text-xl font-semibold">{asset.title}</h2>
+          <div key={asset.id} className="asset-card">
+            <h2>{asset.title}</h2>
             <p>Valuation: ${asset.valuation.toLocaleString()}</p>
             <p>Location: {asset.location}</p>
             <p>Token Supply: {asset.tokenSupply}</p>
 
-            <div className="mt-2">
-              <label className="block mb-1">
-                Quantity:
-                <input
-                  type="number"
-                  min="1"
-                  value={quantities[asset.id] || 1}
-                  onChange={(e) =>
-                    setQuantities((prev) => ({
-                      ...prev,
-                      [asset.id]: parseInt(e.target.value),
-                    }))
-                  }
-                  className="w-full border px-2 py-1 mt-1 rounded"
-                />
-              </label>
-              <button
-                disabled={purchaseLoading[asset.id] || asset.tokenSupply < 1}
-                onClick={() => buyTokens(asset.id)}
-                className={`w-full mt-2 px-4 py-2 rounded text-white ${
-                  asset.tokenSupply < 1
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700"
-                } ${purchaseLoading[asset.id] ? "opacity-50" : ""}`}
-              >
-                {purchaseLoading[asset.id]
-                  ? "Processing..."
-                  : asset.tokenSupply < 1
-                  ? "Sold Out"
-                  : "Buy Token"}
-              </button>
-            </div>
+            <label>
+              Quantity:
+              <input
+                type="number"
+                min="1"
+                value={quantities[asset.id]}
+                onChange={(e) =>
+                  setQuantities((prev) => ({
+                    ...prev,
+                    [asset.id]: parseInt(e.target.value),
+                  }))
+                }
+              />
+            </label>
+
+            <button
+              disabled={purchaseLoading[asset.id] || asset.tokenSupply < 1}
+              onClick={() => buyTokens(asset.id)}
+            >
+              {purchaseLoading[asset.id]
+                ? "Processing..."
+                : asset.tokenSupply < 1
+                ? "Sold Out"
+                : "Buy Token"}
+            </button>
           </div>
         ))}
       </div>
 
-      <h2 className="text-xl font-bold mt-8">My Investments</h2>
-      {investments.length === 0 ? (
-        <p className="text-gray-500 mt-2">No investments yet.</p>
-      ) : (
-        <ul className="list-disc pl-6 mt-2">
-          {investments.map((inv) => (
-            <li key={inv.id}>
-              {inv.assetName} — {inv.amount} token
-              {inv.amount > 1 ? "s" : ""}
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="investments">
+        <h2>My Investments</h2>
+        {investments.length === 0 ? (
+          <p className="loading">No investments yet.</p>
+        ) : (
+          <ul>
+            {investments.map((inv) => (
+              <li key={inv.id}>
+                {inv.assetName} — {inv.amount} token
+                {inv.amount > 1 ? "s" : ""}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
