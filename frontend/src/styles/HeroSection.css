@@ -1,5 +1,5 @@
 .hero {
-  padding: 10vh 5vw 5vh 5vw;
+  padding: 10vh 0vw 5vh 0vw;
   text-align: left;
   background-color: #000;
   color: white;
@@ -18,6 +18,10 @@
 }
 
 /* Hero Animation Section */
+.hero-content{
+  padding: 0vh 4vw 0vh 4vw;
+}
+
 .hero-animation {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
   backdrop-filter: blur(20px);
@@ -65,6 +69,15 @@
   min-height: 60px;
 }
 
+.hero-spline-wrapper{
+  width: 100%;
+  height: 45vh;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  /* margin-left: 200px; */
+}
+
 /* Cards Section */
 .cards-container {
   display: flex;
@@ -80,6 +93,10 @@
 
 .cards-container::-webkit-scrollbar {
   display: none;
+}
+
+.cards-wrapper{
+  padding: 0vh 3vw 0vh 3vw;
 }
 
 .cards {

@@ -1,4 +1,4 @@
-import heroImg from "../assets/hero-img2.jpg";
+import Spline from '@splinetool/react-spline';
 import "../styles/HeroSection.css"
 
 export default function HeroSection() {
@@ -12,13 +12,20 @@ export default function HeroSection() {
         </p>
         {/* <button>Explore Marketplace</button> */}
       </div>
-      <div className="hero-animation">
-        {/* <img className="hero-asset" src={heroImg} alt="hero-asset" /> */}
+      {/* <div className="hero-animation">
+      
         <span className="hero-animation-box">
+        
           <div className="hero-animation-box-content"></div>
           <div className="hero-animation-box-content-content"></div>
         </span>
+      </div> */}
+      <div className='hero-spline-wrapper'>
+      <Spline scene="https://prod.spline.design/ciWP7ipQtefUw6it/scene.splinecode" />
       </div>
+
+      {/* cards */}
+      <div className='cards-wrapper'>
       <div className="cards-container">
         <div className="cards">
           {/* <h2></h2> */}
@@ -32,6 +39,7 @@ export default function HeroSection() {
           {/* <h2 className="card-title"></h2> */}
           <p>Invest in tokenized real-world assets on Ethereum.</p>
         </div>
+      </div>
       </div>
     </section>
   );
