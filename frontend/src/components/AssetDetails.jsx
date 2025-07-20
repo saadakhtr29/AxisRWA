@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getAssetById, purchaseOwnership } from "../services/api";
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
+import { parseEther, formatEther } from "ethers";
 
 // Detailed view of a single approved asset
 export default function AssetDetails() {
