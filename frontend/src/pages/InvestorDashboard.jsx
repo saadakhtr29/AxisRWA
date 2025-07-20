@@ -3,6 +3,7 @@ import { fetchFeaturedProducts } from "../services/api";
 import { useAuth } from "../context/AuthProvider";
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
+import tokenABI from "../abis/AXISRWAOwnershipToken.json";
 import "../styles/InvestorDashboard.css";
 
 export default function InvestorDashboard() {
@@ -29,7 +30,7 @@ export default function InvestorDashboard() {
     fetchData();
   }, []);
 
-  // Fetch user’s investments
+  // Fetch user's investments
   const fetchMyInvestments = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -51,14 +52,21 @@ export default function InvestorDashboard() {
     fetchMyInvestments();
   }, []);
 
-  // Handle purchase
+  // Handle token purchase
   const buyTokens = async (assetId) => {
     if (!isConnected) {
       alert("Please connect your wallet.");
       return;
     }
 
+    const asset = assets.find((a) => a.id === assetId);
     const amount = quantities[assetId] || 1;
+
+    if (!asset?.tokenAddress) {
+      alert("This asset has not been tokenized yet.");
+      return;
+    }
+
     if (amount < 1) {
       alert("Please enter a valid quantity.");
       return;
@@ -66,9 +74,28 @@ export default function InvestorDashboard() {
 
     try {
       setPurchaseLoading((prev) => ({ ...prev, [assetId]: true }));
-      const token = localStorage.getItem("token");
-      const txHash = ethers.utils.hexlify(ethers.utils.randomBytes(32));
 
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        asset.tokenAddress,
+        tokenABI.abi,
+        signer
+      );
+
+      const decimals = 18;
+      const amountInWei = ethers.parseUnits(amount.toString(), decimals);
+
+      // Transfer tokens to platform (assumes user has balance)
+      const tx = await contract.transfer(
+        import.meta.env.VITE_PLATFORM_WALLET,
+        amountInWei
+      );
+      const receipt = await tx.wait();
+      const txHash = receipt.hash;
+
+      // Notify backend of ownership
+      const token = localStorage.getItem("token");
       const res = await fetch(
         `${import.meta.env.VITE_BASE_URL}/ownership/buy`,
         {
@@ -112,29 +139,51 @@ export default function InvestorDashboard() {
             <p>Location: {asset.location}</p>
             <p>Token Supply: {asset.tokenSupply}</p>
 
+            {asset.tokenAddress ? (
+              <p className="token-address">
+                Token Address:{" "}
+                <a
+                  href={`https://mumbai.polygonscan.com/address/${asset.tokenAddress}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {asset.tokenAddress.slice(0, 6)}...
+                  {asset.tokenAddress.slice(-4)}
+                </a>
+              </p>
+            ) : (
+              <p className="token-pending">Token not deployed yet</p>
+            )}
+
             <label>
               Quantity:
               <input
                 type="number"
                 min="1"
-                value={quantities[asset.id]}
+                value={quantities[asset.id] || ""}
                 onChange={(e) =>
                   setQuantities((prev) => ({
                     ...prev,
-                    [asset.id]: parseInt(e.target.value),
+                    [asset.id]: parseInt(e.target.value) || 1,
                   }))
                 }
               />
             </label>
 
             <button
-              disabled={purchaseLoading[asset.id] || asset.tokenSupply < 1}
+              disabled={
+                purchaseLoading[asset.id] ||
+                asset.tokenSupply < 1 ||
+                !asset.tokenAddress
+              }
               onClick={() => buyTokens(asset.id)}
             >
               {purchaseLoading[asset.id]
                 ? "Processing..."
                 : asset.tokenSupply < 1
                 ? "Sold Out"
+                : !asset.tokenAddress
+                ? "Token Not Ready"
                 : "Buy Token"}
             </button>
           </div>
@@ -149,8 +198,7 @@ export default function InvestorDashboard() {
           <ul>
             {investments.map((inv) => (
               <li key={inv.id}>
-                {inv.assetName} — {inv.amount} token
-                {inv.amount > 1 ? "s" : ""}
+                {inv.assetName} — {inv.amount} token{inv.amount > 1 ? "s" : ""}
               </li>
             ))}
           </ul>
