@@ -1,20 +1,17 @@
 const hre = require("hardhat");
 
 async function main() {
-  const Token = await hre.ethers.getContractFactory("AXISRWAOwnershipToken");
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Deploying contracts with:", deployer.address);
 
-  // Customize these:
-  const name = "Axis Hotel Token";
-  const symbol = "AXHT";
-  const initialSupply = 1000000; // 1 million tokens
+  const Factory = await hre.ethers.getContractFactory("AXISRWAOwnershipTokenFactory");
+  const factory = await Factory.deploy();
+  await factory.deployed();
 
-  const token = await Token.deploy(name, symbol, initialSupply);
-  await token.deployed();
-
-  console.log(`Deployed ${symbol} at: ${token.address}`);
+  console.log("AXISRWAOwnershipTokenFactory deployed at:", factory.address);
 }
 
 main().catch((error) => {
-  console.error(error);
+  console.error("Deployment failed:", error);
   process.exitCode = 1;
 });
