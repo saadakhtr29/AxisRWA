@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAssetById, purchaseOwnership } from "../services/api";
 import { useAccount } from "wagmi";
-import { ethers } from "ethers";
-import { parseEther, formatEther } from "ethers";
+import { parseEther, formatEther, hexlify, randomBytes } from "ethers";
 
 // Detailed view of a single approved asset
 export default function AssetDetails() {
@@ -38,7 +37,7 @@ export default function AssetDetails() {
       setLoadingPurchase(true);
 
       // Generate a fake transaction hash (mocked)
-      const txHash = ethers.utils.hexlify(ethers.utils.randomBytes(32));
+      const txHash = hexlify(randomBytes(32));
 
       // Submit to backend
       const response = await purchaseOwnership(asset.id, quantity, txHash);
