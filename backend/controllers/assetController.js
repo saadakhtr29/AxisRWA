@@ -3,6 +3,7 @@ const { z } = require("zod");
 const prisma = new PrismaClient();
 
 const { uploadToCloudinary } = require("../services/cloudinaryService");
+const ownershipService = require("../services/ownershipService");
 
 // Schema for validating asset input (used for creation and update)
 const assetSchema = z.object({
@@ -26,7 +27,10 @@ const uploadAssetImage = async (req, res) => {
       "axisrwa/assets"
     );
 
-    const cloudinaryResult = await uploadToCloudinary(req.file.buffer, "axisrwa/assets");
+    const cloudinaryResult = await uploadToCloudinary(
+      req.file.buffer,
+      "axisrwa/assets"
+    );
 
     const updatedAsset = await prisma.asset.update({
       where: { id: req.params.id },
@@ -155,16 +159,41 @@ const getPartnerAssets = async (req, res) => {
  */
 const approveAsset = async (req, res) => {
   try {
+    const asset = await prisma.asset.findUnique({
+      where: { id: req.params.id },
+    });
+
+    if (!asset) {
+      return res.status(404).json({ error: "Asset not found." });
+    }
+
+    // Deploy ERC20 token for this asset
+    let contractAddress;
+    try {
+      contractAddress = await ownershipService.deployOwnershipTokenForAsset(
+        asset.title,
+        asset.title.slice(0, 3).toUpperCase() + Date.now().toString().slice(-3),
+        asset.tokenSupply
+      );
+    } catch (deployErr) {
+      console.error("Contract deployment failed:", deployErr);
+      return res.status(500).json({ error: "Failed to deploy ERC20 token." });
+    }
+
+    // Update asset with token contract address
     const updated = await prisma.asset.update({
       where: { id: req.params.id },
       data: {
         approved: true,
-        // Optionally add approval timestamp and admin ID
-        // approvedAt: new Date(),
-        // approvedBy: req.user.userId,
+        tokenAddress: contractAddress, // add this field in the DB
+        approvedAt: new Date(),
+        approvedBy: req.user.userId,
       },
     });
 
+    console.log(
+      `Deployed ERC20 at ${contractAddress} for asset ${asset.title}`
+    );
     return res.json(updated);
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -225,6 +254,7 @@ const deleteAsset = async (req, res) => {
 
     return res.json({ message: "Asset deleted successfully." });
   } catch (err) {
+    console.error("Delete error:", err.message, err.stack);
     return res.status(500).json({ error: err.message });
   }
 };

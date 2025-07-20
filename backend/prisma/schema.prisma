@@ -39,6 +39,7 @@ model Asset {
   valuation       Float
   tokenSupply     Int
   approved        Boolean   @default(false)
+  tokenAddress    String?
   approvedBy      String?
   approvedAt      DateTime?
   status          String    @default("pending") // "pending", "approved", "rejected"
@@ -73,7 +74,7 @@ model OwnershipToken {
   createdAt DateTime @default(now())
 
   user  User  @relation(fields: [userId], references: [id])
-  asset Asset @relation(fields: [assetId], references: [id])
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 }
 
 model RoiToken {

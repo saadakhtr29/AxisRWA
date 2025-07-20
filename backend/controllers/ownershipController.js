@@ -1,6 +1,7 @@
 const ownershipService = require("../services/ownershipService");
 const { validationResult } = require("express-validator");
 
+// No minting here. Assumes user bought from fixed supply.
 exports.purchaseOwnership = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
